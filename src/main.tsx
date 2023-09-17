@@ -11,6 +11,7 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import Init from './pages/init';
 import App from './App';
 import theme from './theme';
+import { Grafico } from './pages/Grafico';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: 'init',
         element: <Init />,
+      },
+      {
+        path: 'graph/:id',
+        element: <Grafico />,
       },
     ],
   },

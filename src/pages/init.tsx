@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   Box,
   Button,
+  CircularProgress,
   Divider,
   FormControl,
   FormHelperText,
@@ -11,7 +12,9 @@ import {
   HStack,
   Input,
   Stack,
+  Tag,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { parseSync } from '@babel/core';
@@ -33,21 +36,35 @@ export default function Init(): JSX.Element {
 
   // console.log(watch('iteraciones'));
 
+  const toast = useToast();
+
   const [dragging, setDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
+  const [loading, setLoading] = useState(false);
+
   const onSendData: SubmitHandler<FormHubs> = (data) => {
     if (!file) {
-      alert('Falta el archivo');
+      toast({
+        title: 'Archivo',
+        description: 'Falta seleccionar un archivo',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
+
       return;
     }
     console.log(data);
     const formData = new FormData();
     formData.append('file', file!);
-    formData.append('iteraciones', data.iteraciones.toString());
+    formData.append('iterations', data.iteraciones.toString());
     console.log(formData);
 
     const BASE_URL = 'https://salty-oasis-54156-ad73c8afce2a.herokuapp.com';
+    const BASE_URL_LOCAL = 'http://localhost:3000';
+
+    setLoading(true);
 
     fetch(`${BASE_URL}/init-phub`, {
       method: 'POST',
@@ -55,8 +72,14 @@ export default function Init(): JSX.Element {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
-        alert(json.solution);
+        toast({
+          title: 'Solucción',
+          description: `La solución es: ${json.id}`,
+          status: 'success',
+        });
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -105,55 +128,76 @@ export default function Init(): JSX.Element {
         Algoritmo P-Hub
       </Text>
 
-      <form onSubmit={handleSubmit(onSendData)}>
-        <Input type="file" hidden id="inputfile" onChange={handleFileChange} />
-        <Stack spacing={4}>
-          <Box
-            p={4}
-            borderWidth={2}
-            borderColor={dragging ? 'blue.400' : 'gray.300'}
-            borderRadius="lg"
-            textAlign="center"
-            cursor="pointer"
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            onClick={() => {
-              console.log('click');
-              document.getElementById('inputfile')?.click();
-            }}
-          >
-            {dragging ? (
-              <Text>¡Suelta el archivo aquí!</Text>
-            ) : (
-              <>
-                <Text>Arrastra y suelta un archivo aquí</Text>
-              </>
-            )}
-          </Box>
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <CircularProgress isIndeterminate color="blue" />
+        </Box>
+      ) : (
+        <form onSubmit={handleSubmit(onSendData)}>
+          <Input
+            type="file"
+            hidden
+            id="inputfile"
+            onChange={handleFileChange}
+          />
+          <Stack spacing={4}>
+            <Box
+              p={4}
+              borderWidth={2}
+              borderColor={dragging ? 'blue.400' : 'gray.300'}
+              borderRadius="lg"
+              textAlign="center"
+              cursor="pointer"
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={() => {
+                console.log('click');
+                document.getElementById('inputfile')?.click();
+              }}
+            >
+              {dragging ? (
+                <Text>¡Suelta el archivo aquí!</Text>
+              ) : (
+                <>
+                  <Text>Arrastra y suelta un archivo aquí</Text>
+                </>
+              )}
+            </Box>
+            <Box>
+              {file && (
+                <Tag size={'md'} variant={'subtle'} colorScheme={'blue'}>
+                  {file.name}
+                </Tag>
+              )}
+            </Box>
 
-          {file && <Text>{file.name}</Text>}
+            <Divider />
 
-          <Divider />
+            <FormControl>
+              <FormLabel>Iteraciones</FormLabel>
+              <Input
+                type="number"
+                defaultValue={50}
+                {...register('iteraciones')}
+              />
+              <FormHelperText>
+                Número de iteraciones que realizara el algoritmo
+              </FormHelperText>
+            </FormControl>
 
-          <FormControl>
-            <FormLabel>Iteraciones</FormLabel>
-            <Input
-              type="number"
-              defaultValue={50}
-              {...register('iteraciones')}
-            />
-            <FormHelperText>
-              Número de iteraciones que realizara el algoritmo
-            </FormHelperText>
-          </FormControl>
-
-          <Button size="lg" color={'blue'} type="submit">
-            Iniciar Ejecución
-          </Button>
-        </Stack>
-      </form>
+            <Button
+              size="lg"
+              type="submit"
+              variant={'solid'}
+              colorScheme="blue"
+            >
+              INICIAR
+            </Button>
+          </Stack>
+        </form>
+      )}
     </Box>
   );
 }
