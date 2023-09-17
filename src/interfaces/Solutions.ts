@@ -1,9 +1,11 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface Solution {
   solution: number;
   iterations: number;
   timeElapsed: number;
   servers: Server[];
-  date: DateClass;
+  date: Timestamp;
 }
 
 export interface DateClass {

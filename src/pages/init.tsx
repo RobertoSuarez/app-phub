@@ -128,76 +128,66 @@ export default function Init(): JSX.Element {
         Algoritmo P-Hub
       </Text>
 
-      {loading ? (
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <CircularProgress isIndeterminate color="blue" />
-        </Box>
-      ) : (
-        <form onSubmit={handleSubmit(onSendData)}>
-          <Input
-            type="file"
-            hidden
-            id="inputfile"
-            onChange={handleFileChange}
-          />
-          <Stack spacing={4}>
-            <Box
-              p={4}
-              borderWidth={2}
-              borderColor={dragging ? 'blue.400' : 'gray.300'}
-              borderRadius="lg"
-              textAlign="center"
-              cursor="pointer"
-              onDragEnter={handleDragEnter}
-              onDragLeave={handleDragLeave}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-              onClick={() => {
-                console.log('click');
-                document.getElementById('inputfile')?.click();
-              }}
-            >
-              {dragging ? (
-                <Text>¡Suelta el archivo aquí!</Text>
-              ) : (
-                <>
-                  <Text>Arrastra y suelta un archivo aquí</Text>
-                </>
-              )}
-            </Box>
-            <Box>
-              {file && (
-                <Tag size={'md'} variant={'subtle'} colorScheme={'blue'}>
-                  {file.name}
-                </Tag>
-              )}
-            </Box>
+      <form onSubmit={handleSubmit(onSendData)}>
+        <Input type="file" hidden id="inputfile" onChange={handleFileChange} />
+        <Stack spacing={4}>
+          <Box
+            p={4}
+            borderWidth={2}
+            borderColor={dragging ? 'blue.400' : 'gray.300'}
+            borderRadius="lg"
+            textAlign="center"
+            cursor="pointer"
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={() => {
+              console.log('click');
+              document.getElementById('inputfile')?.click();
+            }}
+          >
+            {dragging ? (
+              <Text>¡Suelta el archivo aquí!</Text>
+            ) : (
+              <>
+                <Text>Arrastra y suelta un archivo aquí</Text>
+              </>
+            )}
+          </Box>
+          <Box>
+            {file && (
+              <Tag size={'md'} variant={'subtle'} colorScheme={'blue'}>
+                {file.name}
+              </Tag>
+            )}
+          </Box>
 
-            <Divider />
+          <Divider />
 
-            <FormControl>
-              <FormLabel>Iteraciones</FormLabel>
-              <Input
-                type="number"
-                defaultValue={50}
-                {...register('iteraciones')}
-              />
-              <FormHelperText>
-                Número de iteraciones que realizara el algoritmo
-              </FormHelperText>
-            </FormControl>
+          <FormControl>
+            <FormLabel>Iteraciones</FormLabel>
+            <Input
+              type="number"
+              defaultValue={50}
+              {...register('iteraciones')}
+            />
+            <FormHelperText>
+              Número de iteraciones que realizara el algoritmo
+            </FormHelperText>
+          </FormControl>
 
-            <Button
-              size="lg"
-              type="submit"
-              variant={'solid'}
-              colorScheme="blue"
-            >
-              INICIAR
-            </Button>
-          </Stack>
-        </form>
-      )}
+          <Button
+            size="lg"
+            type="submit"
+            variant={'solid'}
+            colorScheme="blue"
+            isLoading={loading}
+          >
+            INICIAR
+          </Button>
+        </Stack>
+      </form>
     </Box>
   );
 }

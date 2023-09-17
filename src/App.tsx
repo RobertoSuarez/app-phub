@@ -1,17 +1,13 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-
 import { Box, Button, Flex, HStack, Image, Link, Text } from '@chakra-ui/react';
-
-import ThemeToggleButton from './components/ThemeToggleButton';
-import logo from './logo.svg';
+import { useNavigate } from 'react-router-dom';
 
 const textFontSizes = [16, 18, 24, 30];
 
 function App(): JSX.Element {
   const [count, setCount] = useState(0);
-
+  const navigate = useNavigate();
   return (
     <Box
       w="100%"
@@ -23,7 +19,22 @@ function App(): JSX.Element {
       overflowY="auto"
     >
       <HStack paddingX={8} paddingY={4} justifyContent="end">
-        <Button variant="ghost">Historial</Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          P-HUB
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            navigate('/history');
+          }}
+        >
+          Historial
+        </Button>
       </HStack>
 
       <Box flex={1} display="flex" justifyContent="center" alignItems="start">

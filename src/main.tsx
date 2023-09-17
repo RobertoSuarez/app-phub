@@ -12,6 +12,7 @@ import Init from './pages/init';
 import App from './App';
 import theme from './theme';
 import { Grafico } from './pages/Grafico';
+import { History } from './pages/History';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'graph/:id',
         element: <Grafico />,
+      },
+      {
+        path: 'history',
+        element: <History />,
       },
     ],
   },
