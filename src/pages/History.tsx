@@ -96,7 +96,7 @@ export const History = () => {
                 <Th>Hora</Th>
                 <Th isNumeric>Iteraciones</Th>
                 <Th isNumeric>Solución</Th>
-                <Th isNumeric>Ejecución</Th>
+                <Th isNumeric>Ejecución(seg)</Th>
                 <Th>Archivo</Th>
               </Tr>
             </Thead>

@@ -6,6 +6,10 @@
     "email": "hello@david-sima.dev",
     "url": "https://github.com/The24thDS"
   },
+  "engines": {
+    "node": "18.16.1",
+    "npm": "9.5.1"
+  },
   "private": true,
   "license": "MIT",
   "scripts": {
