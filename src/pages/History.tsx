@@ -31,6 +31,7 @@ interface Resultado {
   iterations: number;
   solution: number;
   time: number;
+  file: string;
 }
 
 export const History = () => {
@@ -52,6 +53,7 @@ export const History = () => {
           iterations: solution.iterations,
           solution: solution.solution,
           time: solution.timeElapsed,
+          file: solution.file || 'No Registrado',
         });
       });
 
@@ -95,6 +97,7 @@ export const History = () => {
                 <Th isNumeric>Iteraciones</Th>
                 <Th isNumeric>Solución</Th>
                 <Th isNumeric>Ejecución</Th>
+                <Th>Archivo</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -105,6 +108,7 @@ export const History = () => {
                   <Td isNumeric>{result.iterations}</Td>
                   <Td isNumeric>{result.solution.toFixed(2)}</Td>
                   <Td isNumeric>{result.time.toFixed(4)}</Td>
+                  <Td>{result.file}</Td>
                   <Td isNumeric>
                     <Button
                       size="xs"

@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { parseSync } from '@babel/core';
+import { BASE_URL, BASE_URL_LOCAL } from '../utils/url';
 
 type FormHubs = {
   hubs: number;
@@ -60,9 +61,6 @@ export default function Init(): JSX.Element {
     formData.append('file', file!);
     formData.append('iterations', data.iteraciones.toString());
     console.log(formData);
-
-    const BASE_URL = 'https://salty-oasis-54156-ad73c8afce2a.herokuapp.com';
-    const BASE_URL_LOCAL = 'http://localhost:3000';
 
     setLoading(true);
 

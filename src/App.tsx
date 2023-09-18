@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Box, Button, Flex, HStack, Image, Link, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Button, HStack } from '@chakra-ui/react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const textFontSizes = [16, 18, 24, 30];
 
@@ -19,20 +19,10 @@ function App(): JSX.Element {
       overflowY="auto"
     >
       <HStack paddingX={8} paddingY={4} justifyContent="end">
-        <Button
-          variant="ghost"
-          onClick={() => {
-            navigate('/');
-          }}
-        >
+        <Button variant="ghost" as={Link} to="/">
           P-HUB
         </Button>
-        <Button
-          variant="ghost"
-          onClick={() => {
-            navigate('/history');
-          }}
-        >
+        <Button variant="ghost" as={Link} to="/history">
           Historial
         </Button>
       </HStack>

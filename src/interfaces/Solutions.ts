@@ -6,6 +6,7 @@ export interface Solution {
   timeElapsed: number;
   servers: Server[];
   date: Timestamp;
+  file: string;
 }
 
 export interface DateClass {
