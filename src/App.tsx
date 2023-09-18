@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Box, Button, HStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  HStack,
+  useColorMode,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useNavigate, Link } from 'react-router-dom';
 
 const textFontSizes = [16, 18, 24, 30];
@@ -8,22 +14,37 @@ const textFontSizes = [16, 18, 24, 30];
 function App(): JSX.Element {
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const bg = useColorModeValue('#8EC5FC', '#000');
+  const bgGradient = useColorModeValue(
+    'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
+    ''
+  );
+  const color = useColorModeValue('black', 'white');
+
   return (
+    // background-color: ;
+    // background-image: ;
+
     <Box
       w="100%"
       minH="100vh"
-      backgroundColor="#8EC5FC"
-      bgGradient="linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
+      bg={bg}
+      bgGradient={bgGradient}
       display="flex"
       flexDirection="column"
       overflowY="auto"
     >
       <HStack paddingX={8} paddingY={4} justifyContent="end">
-        <Button variant="ghost" as={Link} to="/">
+        <Button variant="ghost" as={Link} to="/" color={color}>
           P-HUB
         </Button>
-        <Button variant="ghost" as={Link} to="/history">
+        <Button variant="ghost" as={Link} to="/history" color={color}>
           Historial
+        </Button>
+        <Button variant="ghost" onClick={toggleColorMode} color={color}>
+          Cambiar {colorMode === 'light' ? 'Dark' : 'Light'}
         </Button>
       </HStack>
 

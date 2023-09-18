@@ -14,6 +14,7 @@ import {
   Stack,
   Tag,
   Text,
+  useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -43,6 +44,10 @@ export default function Init(): JSX.Element {
   const [file, setFile] = useState<File | null>(null);
 
   const [loading, setLoading] = useState(false);
+
+  const bg = useColorModeValue('gray.50', 'gray.800');
+  const color = useColorModeValue('black', 'white');
+  const colorSecondary = useColorModeValue('gray.600', 'gray.200');
 
   const onSendData: SubmitHandler<FormHubs> = (data) => {
     if (!file) {
@@ -81,17 +86,17 @@ export default function Init(): JSX.Element {
       });
   };
 
-  const handleDragEnter = (e: any) => {
+  const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
     setDragging(true);
   };
 
-  const handleDragLeave = (e: any) => {
+  const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     setDragging(false);
   };
 
-  const handleDragOver = (e: any) => {
+  const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     if (!dragging) {
       setDragging(true);
@@ -117,12 +122,14 @@ export default function Init(): JSX.Element {
     <Box
       minW={500}
       backgroundColor="white"
-      shadow="base"
+      bg={bg}
+      boxShadow="dark-lg"
+      shadow="2xl"
       rounded="md"
       padding={8}
       marginBottom={16}
     >
-      <Text fontSize="3xl" mb={8}>
+      <Text fontSize="3xl" mb={8} color={color}>
         Algoritmo P-Hub
       </Text>
 
@@ -146,16 +153,16 @@ export default function Init(): JSX.Element {
             }}
           >
             {dragging ? (
-              <Text>¡Suelta el archivo aquí!</Text>
+              <Text color={color}>¡Suelta el archivo aquí!</Text>
             ) : (
               <>
-                <Text>Arrastra y suelta un archivo aquí</Text>
+                <Text color={color}>Arrastra y suelta un archivo aquí</Text>
               </>
             )}
           </Box>
           <Box>
             {file && (
-              <Tag size={'md'} variant={'subtle'} colorScheme={'blue'}>
+              <Tag size={'md'} variant={'subtle'} colorScheme="primary">
                 {file.name}
               </Tag>
             )}
@@ -164,22 +171,23 @@ export default function Init(): JSX.Element {
           <Divider />
 
           <FormControl>
-            <FormLabel>Iteraciones</FormLabel>
+            <FormLabel color={color}>Iteraciones</FormLabel>
             <Input
               type="number"
               defaultValue={50}
               {...register('iteraciones')}
+              borderColor={'gray.300'}
+              color={color}
             />
-            <FormHelperText>
+            <FormHelperText color={colorSecondary}>
               Número de iteraciones que realizara el algoritmo
             </FormHelperText>
           </FormControl>
-
           <Button
             size="lg"
             type="submit"
             variant={'solid'}
-            colorScheme="blue"
+            colorScheme="primary"
             isLoading={loading}
           >
             INICIAR

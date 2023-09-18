@@ -5,12 +5,10 @@ import {
   Navigate,
   RouterProvider,
 } from 'react-router-dom';
-
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-
-import Init from './pages/init';
-import App from './App';
 import theme from './theme';
+import App from './App';
+import Init from './pages/init';
 import { Grafico } from './pages/Grafico';
 import { History } from './pages/History';
 
@@ -46,7 +44,7 @@ const root = createRoot(container!);
 root.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <ColorModeScript initialColorMode={'light'} />
       <RouterProvider router={router} />
     </ChakraProvider>
   </React.StrictMode>
