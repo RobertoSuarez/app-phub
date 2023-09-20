@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   HStack,
+  Text,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
@@ -36,16 +37,21 @@ function App(): JSX.Element {
       flexDirection="column"
       overflowY="auto"
     >
-      <HStack paddingX={8} paddingY={4} justifyContent="end">
-        <Button variant="ghost" as={Link} to="/" color={color}>
-          P-HUB
-        </Button>
-        <Button variant="ghost" as={Link} to="/history" color={color}>
-          Historial
-        </Button>
-        <Button variant="ghost" onClick={toggleColorMode} color={color}>
-          Cambiar {colorMode === 'light' ? 'Dark' : 'Light'}
-        </Button>
+      <HStack paddingX={8} paddingY={4} justifyContent="space-between">
+        <Text color={color} fontSize={'3xl'} fontWeight={'medium'}>
+          💻 P-HUB
+        </Text>
+        <Box>
+          <Button variant="ghost" as={Link} to="/" color={color}>
+            P-HUB
+          </Button>
+          <Button variant="ghost" as={Link} to="/history" color={color}>
+            Historial
+          </Button>
+          <Button variant="ghost" onClick={toggleColorMode} color={color}>
+            Cambiar {colorMode === 'light' ? 'Dark' : 'Light'}
+          </Button>
+        </Box>
       </HStack>
 
       <Box flex={1} display="flex" justifyContent="center" alignItems="start">
