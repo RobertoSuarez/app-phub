@@ -148,9 +148,9 @@ export const Grafico = () => {
           <>
             <Box>
               <Text fontSize="2xl" fontWeight={'medium'} color={color}>
-                Grafico de la solución
+                Gráfico de la solución
               </Text>
-              <Text color={colorSecondary}>Detalles del analisis</Text>
+              <Text color={colorSecondary}>Detalles del análisis</Text>
             </Box>
             <Box display={'flex'} gap={4}>
               <Tag colorScheme="blue" variant={'subtle'}>

@@ -156,7 +156,7 @@ export default function Init(): JSX.Element {
           </Box>
           <Box>
             {file && (
-              <Tag size={'md'} variant={'subtle'} colorScheme="primary">
+              <Tag size={'md'} variant={'subtle'} colorScheme="blue">
                 {file.name}
               </Tag>
             )}
@@ -174,14 +174,14 @@ export default function Init(): JSX.Element {
               color={color}
             />
             <FormHelperText color={colorSecondary}>
-              Número de iteraciones que realizara el algoritmo
+              Número de iteraciones que realizará el algoritmo
             </FormHelperText>
           </FormControl>
           <Button
             size="lg"
             type="submit"
             variant={'solid'}
-            colorScheme="primary"
+            colorScheme="blue"
             isLoading={loading}
           >
             INICIAR

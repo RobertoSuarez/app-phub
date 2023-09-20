@@ -4,13 +4,13 @@ import {
   Box,
   Button,
   HStack,
+  Switch,
   Text,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useNavigate, Link } from 'react-router-dom';
-
-const textFontSizes = [16, 18, 24, 30];
+import { SunIcon, MoonIcon } from '@chakra-ui/icons';
 
 function App(): JSX.Element {
   const [count, setCount] = useState(0);
@@ -49,7 +49,11 @@ function App(): JSX.Element {
             Historial
           </Button>
           <Button variant="ghost" onClick={toggleColorMode} color={color}>
-            Cambiar {colorMode === 'light' ? 'Dark' : 'Light'}
+            {colorMode === 'light' ? (
+              <MoonIcon></MoonIcon>
+            ) : (
+              <SunIcon></SunIcon>
+            )}
           </Button>
         </Box>
       </HStack>
