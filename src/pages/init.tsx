@@ -1,15 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import {
   Box,
   Button,
-  CircularProgress,
   Divider,
   FormControl,
   FormHelperText,
   FormLabel,
-  HStack,
   Input,
   Stack,
   Tag,
@@ -18,8 +15,8 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { parseSync } from '@babel/core';
-import { BASE_URL, BASE_URL_LOCAL } from '../utils/url';
+import { BASE_URL } from '../utils/url';
+import { useNavigate } from 'react-router-dom';
 
 type FormHubs = {
   hubs: number;
@@ -29,14 +26,9 @@ type FormHubs = {
 };
 
 export default function Init(): JSX.Element {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormHubs>();
+  const { register, handleSubmit } = useForm<FormHubs>();
 
-  // console.log(watch('iteraciones'));
+  const navitage = useNavigate();
 
   const toast = useToast();
 
@@ -61,11 +53,11 @@ export default function Init(): JSX.Element {
 
       return;
     }
-    console.log(data);
+    // console.log(data);
     const formData = new FormData();
     formData.append('file', file!);
     formData.append('iterations', data.iteraciones.toString());
-    console.log(formData);
+    // console.log(formData);
 
     setLoading(true);
 
@@ -77,9 +69,11 @@ export default function Init(): JSX.Element {
       .then((json) => {
         toast({
           title: 'Solucción',
-          description: `La solución es: ${json.id}`,
+          description: `Se ha completado la ejecución`,
           status: 'success',
         });
+
+        navitage(`/graph/${json.id}`);
       })
       .finally(() => {
         setLoading(false);

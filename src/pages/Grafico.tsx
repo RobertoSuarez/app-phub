@@ -3,9 +3,12 @@ import {
   Grid,
   HStack,
   SimpleGrid,
+  Skeleton,
   Stack,
   Tag,
   Text,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
@@ -21,10 +24,23 @@ let lineClientToServer: any[] = [];
 export const Grafico = () => {
   const { id } = useParams();
 
+  const { colorMode } = useColorMode();
+
   const [data, setData] = useState<Solution | null>(null);
   const [stateServers, setStateServers] = useState<any[]>();
   const [stateClients, setStateClients] = useState<any[]>();
   const [stateLines, setStateLines] = useState<any[]>();
+  const [stateLayout, setStateLayout] = useState<Partial<Plotly.Layout>>({
+    width: 900,
+    height: 500,
+    title: 'Gráfico del Algoritmo P-HUB',
+    paper_bgcolor: '',
+  });
+
+  const bg = useColorModeValue('gray.50', 'gray.800');
+  const color = useColorModeValue('black', 'white');
+  const colorSecondary = useColorModeValue('gray.600', 'gray.200');
+  const paperbg = useColorModeValue('#F7FAFC', '#1A202C');
 
   const drawGraph = (dataDoc: Solution) => {
     plots = [];
@@ -113,52 +129,61 @@ export const Grafico = () => {
       <Box
         marginX={16}
         marginBottom={4}
-        padding={4}
+        py={4}
+        px={8}
         shadow="base"
         rounded={'md'}
-        background="rgba(255, 255, 255, 0.2)" // Fondo con transparencia
+        background={bg} // Fondo con transparencia
         backdropFilter="blur(10px)" // Efecto de vidrio empañado
         display={'flex'}
         justifyContent={'space-between'}
         alignItems={'center'}
       >
-        <Box>
-          <Text fontSize="2xl" fontWeight={'medium'}>
-            Grafico de la solución
-          </Text>
-          <Text color={'blackAlpha.700'}>Detalles del analisis</Text>
-        </Box>
-        <Box display={'flex'} gap={4}>
-          <Tag colorScheme="blue" variant={'subtle'}>
-            Iteraciones: {data?.iterations}
-          </Tag>
-          <Tag colorScheme="blue" variant={'subtle'}>
-            Solución: {data?.solution.toFixed(2)}
-          </Tag>
-          <Tag colorScheme="blue" variant={'subtle'}>
-            Tiempo: {data?.timeElapsed.toFixed(2)} seg
-          </Tag>
-        </Box>
+        {!data ? (
+          <Stack>
+            <Skeleton height="20px" width="900px"></Skeleton>
+            <Skeleton height="20px" width="900px"></Skeleton>
+          </Stack>
+        ) : (
+          <>
+            <Box>
+              <Text fontSize="2xl" fontWeight={'medium'} color={color}>
+                Grafico de la solución
+              </Text>
+              <Text color={colorSecondary}>Detalles del analisis</Text>
+            </Box>
+            <Box display={'flex'} gap={4}>
+              <Tag colorScheme="blue" variant={'subtle'}>
+                Iteraciones: {data?.iterations}
+              </Tag>
+              <Tag colorScheme="blue" variant={'subtle'}>
+                Solución: {data?.solution.toFixed(2)}
+              </Tag>
+              <Tag colorScheme="blue" variant={'subtle'}>
+                Tiempo: {data?.timeElapsed.toFixed(2)} seg
+              </Tag>
+            </Box>
+          </>
+        )}
       </Box>
+
       <Box
         flex={1}
         marginX={16}
-        backgroundColor="white"
+        bg={bg}
         shadow="base"
         rounded="md"
-        padding={8}
+        p={8}
         marginBottom={16}
       >
         <Box width="100%" display="flex" justifyContent="center">
-          {stateServers && stateClients && stateLines && (
+          {stateServers && stateClients && stateLines ? (
             <Plot
               data={[...stateServers, ...stateClients, ...stateLines]}
-              layout={{
-                width: 900,
-                height: 500,
-                title: 'Gráfico del Algoritmo P-HUB',
-              }}
+              layout={stateLayout}
             />
+          ) : (
+            <Skeleton height="600px" width="900px"></Skeleton>
           )}
         </Box>
       </Box>

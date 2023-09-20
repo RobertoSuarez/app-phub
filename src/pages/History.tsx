@@ -13,6 +13,7 @@ import {
   Th,
   Thead,
   Tr,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import {
   collection,
@@ -36,6 +37,10 @@ interface Resultado {
 
 export const History = () => {
   const navigate = useNavigate();
+  const bg = useColorModeValue('gray.50', 'gray.800');
+  const color = useColorModeValue('black', 'white');
+  const colorSecondary = useColorModeValue('gray.600', 'gray.200');
+
   const [stateResult, setStateResult] = useState<Resultado[]>([]);
   useEffect(() => {
     const q = query(
@@ -69,23 +74,23 @@ export const History = () => {
     <Box
       minW={500}
       marginX={16}
-      backgroundColor={'white'}
+      backgroundColor={bg}
       shadow="base"
       rounded="md"
       padding={8}
       marginBottom={16}
     >
-      <Text fontSize="2xl" fontWeight={'normal'} mb={4}>
-        Historial de soluciones
+      <Text fontSize="2xl" fontWeight={'normal'} mb={4} color={color}>
+        📓 Historial de soluciones
       </Text>
 
       {stateResult.length < 1 ? (
         <Stack>
-          <Skeleton height="20px" width={600} />
-          <Skeleton height="20px" width={600} />
-          <Skeleton height="20px" width={600} />
-          <Skeleton height="20px" width={600} />
-          <Skeleton height="20px" width={600} />
+          <Skeleton height="20px" width={800} />
+          <Skeleton height="20px" width={800} />
+          <Skeleton height="20px" width={800} />
+          <Skeleton height="20px" width={800} />
+          <Skeleton height="20px" width={800} />
         </Stack>
       ) : (
         <TableContainer>
@@ -103,12 +108,19 @@ export const History = () => {
             <Tbody>
               {stateResult.map((result) => (
                 <Tr key={result.id}>
-                  <Td>{result.date.toLocaleDateString()}</Td>
-                  <Td>{result.date.toLocaleTimeString()}</Td>
-                  <Td isNumeric>{result.iterations}</Td>
-                  <Td isNumeric>{result.solution.toFixed(2)}</Td>
-                  <Td isNumeric>{result.time.toFixed(4)}</Td>
-                  <Td>{result.file}</Td>
+                  <Td color={color}>{result.date.toLocaleDateString()}</Td>
+                  <Td color={color}>{result.date.toLocaleTimeString()}</Td>
+                  <Td color={color} isNumeric>
+                    {result.iterations}
+                  </Td>
+                  <Td color={color} isNumeric>
+                    {result.solution.toFixed(2)}
+                  </Td>
+
+                  <Td color={color} isNumeric>
+                    {result.time.toFixed(4)}
+                  </Td>
+                  <Td color={color}>{result.file}</Td>
                   <Td isNumeric>
                     <Button
                       size="xs"
