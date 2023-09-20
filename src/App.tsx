@@ -38,7 +38,13 @@ function App(): JSX.Element {
       overflowY="auto"
     >
       <HStack paddingX={8} paddingY={4} justifyContent="space-between">
-        <Text color={color} fontSize={'3xl'} fontWeight={'medium'}>
+        <Text
+          color={color}
+          fontSize={'3xl'}
+          fontWeight={'medium'}
+          as={Link}
+          to="/init"
+        >
           💻 P-HUB
         </Text>
         <Box>

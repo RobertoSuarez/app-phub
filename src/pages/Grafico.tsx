@@ -154,6 +154,10 @@ export const Grafico = () => {
             </Box>
             <Box display={'flex'} gap={4}>
               <Tag colorScheme="blue" variant={'subtle'}>
+                Archivo: {data?.file}
+              </Tag>
+
+              <Tag colorScheme="blue" variant={'subtle'}>
                 Iteraciones: {data?.iterations}
               </Tag>
               <Tag colorScheme="blue" variant={'subtle'}>
